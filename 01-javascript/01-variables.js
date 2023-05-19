@@ -117,3 +117,33 @@ console.log(Object.values(adrian));
 delete adrian.nombre;
 console.log(Object.keys(adrian));
 console.log(adrian);
+
+//Clase 2
+
+//Variables por valor
+let edadAdrian = 33;
+let edadVicente = edadAdrian;
+console.log(edadAdrian); //33
+console.log(edadVicente); //33
+
+edadAdrian = edadAdrian + 1;
+console.log(edadAdrian); //34
+console.log(edadVicente); //33
+
+//Variables por referencia
+//Object: {} []
+let notas = {
+    total: 10,
+}
+let notasSegundoBimestre = notas; //Igualacion referencia
+notasSegundoBimestre.total = notasSegundoBimestre.total + 1;
+console.log(notas); //11
+console.log(notasSegundoBimestre); //11
+
+//Como clonar objetos
+let notasTercerBimestre = Object.assign({}, notas);
+notasTercerBimestre.total = notasTercerBimestre.total + 1;
+console.log(notas); //11
+console.log(notasSegundoBimestre); //11
+console.log(notasTercerBimestre); //12
+
