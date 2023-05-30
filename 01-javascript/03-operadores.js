@@ -128,3 +128,4 @@ console.log(respuestaReduce/ arreglo.lenght); //true
 arreglo.filter((a)=> a.nota < 14)
     .map((a) => a.nota + 1)
     .some((a) => a < 14);
+
