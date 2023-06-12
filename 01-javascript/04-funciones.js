@@ -28,7 +28,7 @@ var funcionSinNombre2 = function(){}
 
 let funcionSinNombre3 = function(){}
 
-[].forEach(function(){});
+//[].forEach(function(){});
 funcionSinNombre1();
 funcionSinNombre2();
 funcionSinNombre3();
