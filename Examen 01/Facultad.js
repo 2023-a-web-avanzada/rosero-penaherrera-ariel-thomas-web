@@ -1,3 +1,5 @@
+import Universidad from "./Universidad";
+
 const inquirer = require('inquirer');
 const fs = require('fs');
 
@@ -129,5 +131,5 @@ class Facultad {
             });
         return promUniversidad
     }
-
 }
+export default Facultad;

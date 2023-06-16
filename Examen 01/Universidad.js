@@ -108,3 +108,4 @@ class Universidad {
         return promUniversidad
     }
 }
+export default Universidad;

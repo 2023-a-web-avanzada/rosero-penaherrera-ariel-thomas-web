@@ -1,219 +1,207 @@
-class Opciones {
-    mostrarOpcionesUniversidades() {
-        console.log("CRUD de Universidades");
-        console.log("1. Crear una Universidad");
-        console.log("2. Listar las Universidades");
-        console.log("3. Opciones Facultad - Actualizar una Universidad");
-        console.log("4. Eliminar una Universidad");
-        console.log("5. Salir" + "\n");
-        console.log("Ingresé el número de la acción que quiere realizar: ");
-    }
+import Universidad from "./Universidad"
+import Facultad from "./Facultad"
+async function main(){
+    try{
+        const uni = new Universidad()
+        const respuesta = await inquirer
+            .prompt([
+                {
+                    type: 'rawlist',
+                    name: 'opcion',
+                    message: '(-----GESTIÓN DE UNIVERSIDADES Y FACULTADES-----")\n' +
+                        '---------Universidad------------")\n' + 'Elige una opción:',
+                    choices: ['Crear', 'Mostrar Universidades y Facultades', 'Actualizar', 'Gestión de Facultades',
+                        'Borrar Universidad con sus Facultades', 'Salir']
+                }
+            ]).then((answer) => {
+                    switch (answer.opcion) {
+                        case 'Crear':
+                            uni.createUniversidad().then(
+                                (dataUniversidad) => {
+                                    readWriteFile('./Universidades.txt', dataUniversidad)
+                                    main()
+                                })
+                            break
 
-    mostrarOpcionesFacultades() {
-        console.log("CRUD de Facultades");
-        console.log("1. Crear una Facultad");
-        console.log("2. Listar las Facultades");
-        console.log("3. Actualizar una Facultad");
-        console.log("4. Eliminar una Facultad");
-        console.log("5. Atrás" + "\n");
-        console.log("Ingresé el número de la acción que quiere realizar: ");
-    }
-}
-
-const rutaArchivoUniversidades = "Universidades.txt";
-let rutaArchivoFacultades;
-const opciones = new Opciones();
-const opcionesUniversidades = new Opciones();
-const listarFacultades = new Facultad();
-const listarUniversidades = new Universidad();
-let opcionUniversidad = true;
-let opcionFacultad = true;
-
-console.log("\nSistema de Gestión de Universidades y Facultades\n");
-
-try {
-    while (opcionUniversidad) {
-        opcionesUniversidades.mostrarOpcionesUniversidades();
-        const opcion = parseInt(prompt());
-
-        switch (opcion) {
-            case 1: {
-                // Creación
-                const nuevaUniversidad = listarUniversidades.crearUniversidad();
-                const aux = listarUniversidades.leerUniversidad(rutaArchivoUniversidades);
-                listarUniversidades.escribirUniversidad(
-                    rutaArchivoUniversidades,
-                    nuevaUniversidad,
-                    aux
-                );
-                console.log();
-                break;
-            }
-            case 2: {
-                // Listar
-                console.log("Universidades registradas: ");
-                const aLecturaUniversidad = listarUniversidades.leerUniversidad(
-                    rutaArchivoUniversidades
-                );
-                console.log(aLecturaUniversidad);
-                break;
-            }
-            case 3: {
-                // Actualización
-                console.log("Operaciones CRUD: ");
-                console.log("1. Actualizar Información de la Universidad: ");
-                console.log("2. Opciones de las Facultades: ");
-                console.log("Ingresé el número de la opción a realizar: ");
-                const subOpcion = parseInt(prompt());
-
-                switch (subOpcion) {
-                    case 1: {
-                        console.log("\n Universidades registradas: ");
-                        const aLecturaUniversidad = listarUniversidades.leerUniversidad(
-                            rutaArchivoUniversidades
-                        );
-                        console.log(aLecturaUniversidad + "\n");
-                        console.log(
-                            "Ingresé el nombre de la Universidad que desea actualizar:"
-                        );
-                        const actualizarUniversidad = prompt();
-                        console.log("Actualizar información de la Universidad");
-                        listarUniversidades.actualizarUniversidad(
-                            actualizarUniversidad,
-                            aLecturaUniversidad,
-                            rutaArchivoUniversidades
-                        );
-                        break;
-                    }
-                    case 2: {
-                        try {
-                            console.log(
-                                "\nIngresé el nombre de la Universidad a la cual va a pertenecer la facultad:"
-                            );
-                            const actualizarUniversidad = prompt();
-                            rutaArchivoFacultades = `${actualizarUniversidad}.txt`;
-
-                            while (opcionFacultad) {
-                                opciones.mostrarOpcionesFacultades();
-                                const facultadSubOpcion = parseInt(prompt());
-
-                                switch (facultadSubOpcion) {
-                                    case 1: {
-                                        // Crear
-                                        const nuevaFacultad = listarFacultades.crearFacultad();
-                                        let aux = listarFacultades.leerFacultad(
-                                            rutaArchivoFacultades
-                                        );
-                                        listarFacultades.escribirFacultad(
-                                            rutaArchivoFacultades,
-                                            nuevaFacultad,
-                                            aux
-                                        );
-                                        console.log();
-                                        break;
-                                    }
-                                    case 2: {
-                                        // Listar
-                                        console.log("Facultades registradas: ");
-                                        const aLecturaFacultades = listarFacultades.leerFacultad(
-                                            rutaArchivoFacultades
-                                        );
-                                        console.log(aLecturaFacultades);
-                                        break;
-                                    }
-                                    case 3: {
-                                        // Actualizar
-                                        console.log("Facultades registradas: ");
-                                        const alecturaFacultad = listarFacultades.leerFacultad(
-                                            rutaArchivoFacultades
-                                        );
-                                        console.log(alecturaFacultad);
-                                        console.log(
-                                            "\nIngrese el nombre de la Facultad que desea actualizar: "
-                                        );
-                                        const actualizarFacultad = prompt();
-                                        console.log("\nActualizar información de la Facultad\n");
-                                        listarFacultades.actualizarFacultad(
-                                            actualizarFacultad,
-                                            alecturaFacultad,
-                                            rutaArchivoFacultades
-                                        );
-                                        break;
-                                    }
-                                    case 4: {
-                                        // Eliminar
-                                        console.log("Facultades registradas: ");
-                                        const alecturaFacultades = listarFacultades.leerFacultad(
-                                            rutaArchivoFacultades
-                                        );
-                                        console.log(alecturaFacultades);
-                                        console.log();
-                                        console.log(
-                                            "Ingresé el nombre de la Facultad que desea eliminar: "
-                                        );
-                                        const eliminarFacultad = prompt();
-                                        listarFacultades.eliminarFacultad(
-                                            eliminarFacultad,
-                                            alecturaFacultades,
-                                            rutaArchivoFacultades
-                                        );
-                                        console.log("\nFacultades registradas: ");
-                                        const aLecturaCiudades = listarFacultades.leerFacultad(
-                                            rutaArchivoFacultades
-                                        );
-                                        console.log(aLecturaCiudades + "\n");
-                                        break;
-                                    }
-                                    case 5: {
-                                        console.log("Atrás" + "\n");
-                                        opcionFacultad = false;
-                                        break;
-                                    }
-                                    default: {
-                                        console.log("Error: ¡La opción ingresada no existe!");
-                                        break;
-                                    }
+                        case 'Mostrar Universidades y Facultades':
+                            readFile('./Universidades.txt').then(
+                                dataUniversidad => {
+                                    console.log(JSON.parse(dataUniversidad))
+                                    main()
                                 }
+                            )
+                            break
+
+                        case 'Actualizar':
+                            readFile('./Universidades.txt').then(
+                                dataUniversidad =>{
+                                    const listaUniversidades = JSON.parse(dataUniversidad)
+                                    uni.updateUniversidad(listaUniversidades).then(
+                                        newData =>{
+                                            writeFile('./Universidades.txt',JSON.stringify(newData))
+                                            console.log('Información actualizada con éxito')
+                                            main()
+                                        }
+                                    )
+                                }
+                            )
+                            break
+
+                        case 'Gestión de Facultades':
+                            var f = new Facultad()
+                            var indexUniversidad;
+                            readFile('./Universidades.txt').then(
+                                dataUniversidad =>{
+                                    const listaUniversidades = JSON.parse(dataUniversidad)
+                                    f.indexUniversidad(listaUniversidades).then(
+                                        indice =>{
+                                            indexUniversidad = parseInt(indice)
+                                            mainFacultad();
+                                        }
+                                    )
+                                }
+                            )
+                        async function mainFacultad() {
+                            try {
+                                facultad = new Facultad()
+                                var universidades = readFile('./Universidades.txt').then(
+                                    dataUniversidad =>{
+                                        universidades = JSON.parse(dataUniversidad)
+                                    }
+                                )
+                                const answFacultad = await inquirer
+                                    .prompt([
+                                        {
+                                            type: 'rawlist',
+                                            name: 'opcion',
+                                            message: '**Gestión de Facultades**")\n' +
+                                                '---------Facultad------------")\n' + 'Elige una opción:',
+                                            choices: ['Crear', 'Mostrar Facultades', 'Actualizar', 'Borrar Facultad',
+                                                'Salir']
+                                        }
+                                    ]).then((ansP) => {
+                                        switch (ansP.opcion) {
+                                            case 'Crear':
+                                                facultad.createFacultad().then(
+                                                    (dataFacultad) => {
+                                                        universidades[indexUniversidad].listaFacultades.push(dataFacultad)
+                                                        writeFile('./Universidades.txt', JSON.stringify(universidades))
+                                                        mainFacultad()
+                                                    })
+                                                break
+
+                                            case 'Mostrar Facultades':
+                                                console.log(universidades[indexUniversidad].listaFacultades)
+                                                mainFacultad()
+                                                break
+
+                                            case 'Actualizar':
+                                                facultad.updateFacultad(universidades, indexUniversidad).then(
+                                                    newData => {
+                                                        writeFile('./Universidades.txt', JSON.stringify(newData))
+                                                        console.log('Información actualizada con éxito')
+                                                        mainFacultad()
+                                                    }
+                                                )
+                                                break
+
+                                            case 'Borrar Facultad':
+                                                facultad.deleteFacultad(universidades, indexUniversidad).then(
+                                                    newData => {
+                                                        writeFile('./Universidades.txt', JSON.stringify(newData))
+                                                        console.log('Información borrada con éxito')
+                                                        mainFacultad()
+                                                    }
+                                                )
+                                                break
+
+                                            case 'Salir':
+                                                main()
+                                                break
+                                        }
+                                    });
+                            } catch (e) {
+                                console.error(e);
                             }
-                        } catch (e) {
-                            console.log("Error en las ciudades !!", e);
                         }
-                        break;
-                    }
-                    default: {
-                        console.log("Error: ¡La opción ingresada no existe!");
-                        break;
+                            break
+
+                        case 'Borrar Universidad con sus Facultades':
+                            readFile('./Universidades.txt').then(
+                                dataUniversidad =>{
+                                    const listaUniversidades = JSON.parse(dataUniversidad)
+                                    uni.deleteUniversidad(listaUniversidades).then(
+                                        newData =>{
+                                            writeFile('./Universidades.txt',JSON.stringify(newData))
+                                            console.log('Información eliminada con éxito')
+                                            main()
+                                        }
+                                    )
+                                }
+                            )
+                            break
+
+                        case 'Salir':
+                            console.log('¡Vuelva pronto!')
+                            break
+
                     }
                 }
-                break;
-            }
-            case 4: {
-                // Eliminar
-                console.log("Universidades registradas: ");
-                const aLecturaUniversidad = listarUniversidades.leerUniversidad(
-                    rutaArchivoUniversidades
-                );
-                console.log(aLecturaUniversidad + "\n");
-                console.log(
-                    "Ingresé el nombre de la Universidad que desea eliminar: "
-                );
-                const eliminarUniversidad = prompt();
-                const auxI = listarUniversidades.eliminarUniversidad(
-                    eliminarUniversidad,
-                    aLecturaUniversidad,
-                    rutaArchivoUniversidades
-                );
-                console.log("Universidades registradas: ");
-                console.log(auxI + "\n");
-                break;
-            }
-            case 5: {
-                // Salir
-                console.log("Vuelva Pronto");
-                opcionUniversidad = false
-            }
-        }
+            );
+    }catch(e){
+        console.error(e);
     }
-} catch (e){
-    console.log("Error en el Menu", e);
+}
+main();
+
+async function readFile(path){
+    let myFirstPromise = await new Promise(
+        (resolve, reject)=>{
+            fs.readFile(
+                path,
+                'utf-8',//codificación
+                (errorReadFirstFile , content) =>{//callback
+                    if(errorReadFirstFile){
+                        reject('Error read a file');
+                    }else{
+                        resolve(content);
+                    }
+                }
+            );
+        }
+    );
+    return myFirstPromise
+}
+
+async function writeFile(path, content){
+    const myPromise = await new Promise(
+        (resolve, reject)=> {
+            fs.writeFile(
+                path,
+                content,
+                (errorWrite) => {//callback
+                    if (errorWrite) {
+                        reject('Error reading a file');
+                    } else {
+                        resolve(content);
+                    }
+                }
+            );
+        }
+    );
+    return myPromise
+}
+async function readWriteFile(path, newContent){
+    try {
+        let answerContentFileOriginal = await readFile(path); //espera una respuesta
+        if(answerContentFileOriginal == ""){
+            answerContentFileOriginal='[]'
+        }
+        answerContentFileOriginal = JSON.parse(answerContentFileOriginal);
+        answerContentFileOriginal.push(newContent)
+        const strRestaurant = JSON.stringify(answerContentFileOriginal);
+        await writeFile(path, strRestaurant);
+    }catch (error){
+        console.error(error);
+    }
 }
