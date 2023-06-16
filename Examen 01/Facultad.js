@@ -1,3 +1,5 @@
+const inquirer = require('inquirer');
+const fs = require('fs');
 
 class Facultad {
     constructor(){
@@ -22,185 +24,110 @@ class Facultad {
         this.nombre = nombre;
         this.numeroEstudiantes = numeroEstudiantes;
         this.poseeAsociacionEstudiantes = poseeAsociacionEstudiantes;
-        this.numeroEstudiantes = numeroEstudiantes;
         this.promedioInvestigativo = promedioInvestigativo;
     }
 
-    toString() {
-        return "Id Facultad: " + this.id_f + ", Nombre: " + this.nombre + "\n" +
-            "Fecha de creación: " + this.fechaCreacion + "\n" +
-            "Número de profesores: " + this.numeroProfesores + "\n" +
-            "Posee asociación de estudiantes: " + this.poseeAsociacionDeEstudiantes + "\n" +
-            "Promedio de Investigación: " + this.promedioInvestigativo;
-    }
-
-    function crearFacultad() {
-        const id = parseInt(prompt("Ingrese el ID de la Facultad:"));
-
-        console.log("Ingresé la fecha de fundación de la Facultad con el formato YYYY-MM-DD:");
-        const auxFechaFundacion = prompt();
-        const fechaCreacion = moment(auxFechaFundacion, "YYYY-MM-DD").format("YYYY-MM-DD");
-
-        console.log("Ingresé el nombre de la nueva Facultad:");
-        const nombreFacultad = prompt();
-
-        const nEstudiantes = parseInt(prompt("Ingrese el número de estudiantes de la Facultad:"));
-
-        const poseeAsociacionEstudiantes = true;
-
-        console.log("Ingresé el promedio investigativo de la Facultad (0.0-10.0):");
-        const promedioInvestigativo = parseFloat(prompt());
-
-        const nuevaFacultad = new Facultad(id, fechaCreacion, nombreFacultad, nEstudiantes, poseeAsociacionEstudiantes, promedioInvestigativo);
-        return nuevaFacultad;
-    }
-
-    //Creación Universidad en Archivos
-    function escribirFacultad(rutaArchivo, facultades, listarFacultades) {
-        listarFacultades.push(facultades);
-        const texto = `${facultades.idF},${facultades.fechaCreacion},${facultades.nombre},${facultades.numeroEstudiantes},${facultades.poseeAsociacionEstudiantes},${facultades.promedioInvestigativo}\n`;
-        try {
-            const fs = require("fs");
-            fs.appendFileSync(rutaArchivo, texto);
-        } catch (e) {
-            console.log("Error en la escritura de la Facultad", e);
-        }
-    }
-
-    function leerFacultad(rutaArchivo) {
-        const listarFacultad = [];
-
-        try {
-            const fs = require("fs");
-            const contenido = fs.readFileSync(rutaArchivo, "utf-8");
-            const lineas = contenido.split("\n");
-
-            for (let i = 0; i < lineas.length; i++) {
-                const tokens = lineas[i].split(",");
-                const idF = parseInt(tokens[0]);
-                const fechaDeFundacion = tokens[1];
-                const nombreFacultad = tokens[2];
-                const numeroEstudiantes = tokens[3]
-                const poseeAsociacionEstudiantes = Boolean(tokens[4]);
-                const promedioInvestigativo = parseFloat(tokens[4])
-
-                const fechaDeFundacionFacultad = moment(fechaDeFundacion, "YYYY-MM-DD").format("YYYY-MM-DD");
-                const nuevaFactuladArchivo = new Universidad(idU, fechaDeFundacionFacultad, nombreFacultad, poseeAsociacionEstudiantes, promedioInvestigativo, numeroEstudiantes);
-
-                listarFacultad.push(nuevaFactuladArchivo);
-            }
-        } catch (e) {
-            console.log("Error en la lectura de la Provincia", e);
-        }
-
-        return listarFacultad;
-    }
-
-    function actualizarFacultad(buscarFacultad, listarFaculades, rutaArchivo) {
-        try {
-            for (let i = 0; i < listarFaculades.length; i++) {
-                const encontrarFacultad = listarFaculades[i];
-                if (encontrarFacultad.nombre === buscarFacultad) {
-                    const indexCiudad = i;
-                    console.log("Información de la Facultad\n");
-
-                    console.log("1. Nombre de la Facultad: " + encontrarFacultad.nombre);
-                    console.log("2. Número de estudiantes: " + encontrarFacultad.nombre);
-                    console.log("3. Posee Asociación de estudiantes: " + encontrarFacultad.poseeAsociacionEstudiantes);
-                    console.log("Seleccione la información que desea actualizar: ");
-
-                    switch (parseInt(readLine().trim())) {
-                        case 1:
-                            console.log("Ingrese la nueva información:");
-                            const nuevoNombre = readLine();
-                            encontrarFacultad.nombre = nuevoNombre.toString();
-                            listarFaculades[indexCiudad] = encontrarFacultad;
-                            actualizacionDatos(listarFaculades, rutaArchivo);
-                            console.log("¡Los datos de la facultad se actualizaron con éxito!");
-                            break;
-                        case 2:
-                            console.log("Ingrese la nueva información:");
-                            const nuevoNumEstudiantes = parseInt(readLine());
-                            encontrarFacultad.numeroEstudiantes = nuevoNumEstudiantes;
-                            listarFaculades[indexCiudad] = encontrarFacultad;
-                            actualizacionDatos(listarFaculades, rutaArchivo);
-                            console.log("¡Los datos de la facultad se actualizaron con éxito!");
-                            break;
-                        case 3:
-                            console.log("Ingrese la nueva información:");
-                            const nPoseeAsociacionEstudiantes = readLine().toLowerCase() === "true";
-                            encontrarFacultad.poseeAsociacionEstudiantes = nPoseeAsociacionEstudiantes;
-                            listarFaculades[indexCiudad] = encontrarFacultad;
-                            actualizacionDatos(listarFaculades, rutaArchivo);
-                            console.log("¡Los datos de la facultad se actualizaron con éxito!");
-                            break;
-                        default:
-                            console.log("¡La opción ingresada no es correcta!");
-                            break;
-                    }
-                }
-            }
-        } catch (e) {
-            console.log("Error en el proceso de Actualización", e);
-        }
-        return listarFaculades;
-    }
-
-    function actualizacionDatos(listarFacultades, rutaArchivo) {
-        try {
-            let archivo = null;
-            let fw = null;
-            let pw = null;
-            let texto = "";
-            for (let i = 0; i < listarFacultades.length; i++) {
-                const facultades = listarFacultades[i];
-                try {
-                    archivo = new File(rutaArchivo);
-                    fw = new FileWriter(archivo);
-                    pw = new PrintWriter(fw);
-
-                    texto += facultades.idF + ",";
-                    texto += facultades.fechaCreacion + ",";
-                    texto += facultades.nombre + ",";
-                    texto += facultades.numeroEstudiantes+ ",";
-                    texto += facultades.poseeAsociacionEstudiantes + ", ";
-                    texto += facultades.promedioInvestigativo + "\n";
-                    fw.write(texto);
-
-                } catch (e) {
-                    console.log("Error en la escritura del archivo facultades", e);
-                } finally {
-                    try {
-                        if (fw != null) {
-                            fw.close();
+    //Función para anexar las facultades con su respectiva Universidad
+    async indexUniversidad(listaUniversidad){
+        var promIndexUniversidad
+        var indexUniversidad;
+        await inquirer.prompt([
+            {type:'input',name:'opcUniversidad',message:'Ingrese el nombre de la Universidad:'},
+        ]).then(ansR => {
+            promIndexUniversidad = new Promise(
+                res => (
+                    listaUniversidad.forEach(
+                        valorActual => {
+                            if(valorActual.name === asnR.opcUniversidad){
+                                indexUniversidad = listaUniversidad.indexOf(valorActual)
+                            }
                         }
-                    } catch (e) {
-                        console.log("Error en la escritura actualización", e);
-                    }
-                }
-            }
-        } catch (e) {
-            console.log("Error en la actualización", e);
-        }
+                    ),
+                res(indexUniversidad)
+                ));
+        });
+        return promIndexUniversidad
     }
 
-    function eliminarFaculad(encontrarFacultad, listarFacultades, rutaArchivo) {
-        try {
-            for (let i = 0; i < listarFacultades.length; i++) {
-                const buscarFacultad = listarFacultades[i];
-                if (buscarFacultad.nombre === encontrarFacultad) {
-                    listarFacultades.splice(i, 1);
-                    actualizacionDatos(listarFacultades, rutaArchivo);
-                    console.log("La facultad se eliminó con éxito!!");
-                    break;
-                } else {
-                    console.log("La facultad ingresada no existe, ingrese una facultad válida");
-                }
-            }
-        } catch (e) {
-            console.log("Error en la eliminación de la ciudad", e);
-        }
-        return listarFacultades;
+    async createFacultad() {
+        const miFacultad = new Facultad();
+        let promFacultad;
+        const answerRes = await inquirer
+            .prompt([
+                {type:'input',name:'id',message:'Ingrese el ID de la Facultad:'},
+                {type:'input',name:'fechaCreacion',message:'Ingresé la fecha de fundación de la Facultad con el formato YYYY-MM-DD:'},
+                {type:'input',name:'nombre',message:'Ingresé el nombre de la nueva Facultad:'},
+                {type:'input',name:'numeroEstudiantes',message:'Ingresé el numero de estudiantes de la Facultad:'},
+                {type:'input',name:'poseeAsociacionEstudiantes',message:'¿La Facultad tiene Asociación de Estudiantes?:', choices:['Si','No']},
+                {type:'input',name:'promedioInvestigativo',message:'Ingresé el promedio investigativo de la Facultad (0.0-10.0):', default: '5.0'}
+            ]).then(a=>{
+                promFacultad = new Promise(
+                    res => (
+                        miFacultad.idF = a.id,
+                            miFacultad.fechaCreacion = new Date(a.fechaCreacion.split('-')[0],a.fechaCreacion.split('-')[1],a.fechaCreacion.split('-')[2]),
+                            miFacultad.nombre = a.nombre,
+                            miFacultad.numeroEstudiantes = a.numeroEstudiantes,
+                            miFacultad.poseeAsociacionEstudiantes = (a.poseeAsociacionEstudiantes === 'Si'),
+                            miFacultad.promedioInvestigativo = parseFloat(a.promedioInvestigativo),
+                            res(miFacultad)
+                    ));
+            });
+        return promFacultad
+    }
+
+    async updateFacultad(listaUniversidades, indexUniversidad){
+        let promUniversidad;
+        let indexFacultad;
+        await inquirer
+            .prompt([
+                {type:'input',name:'id',message:'Ingrese el nombre de la Facultad:'},
+                {type:'rawlist',name:'cEleccion',message:'Elige la opción que vas a cambiar: ',
+                    choices: ['name','numeroEstudiantes','poseeAsociacionEstudiantes','promedioInvestigativo']},
+                {type:'input',name:'nuevoValor',message:'Ingrese el nuevo valor: '},
+            ]).then(a=>{
+                promUniversidad = new Promise(
+                    res =>(
+                        listaUniversidades[indexUniversidad].listaFacultades.forEach(
+                            facultad => {
+                                if(facultad.nombre == a.nombre){
+                                    indexFacultad = listaUniversidades[indexUniversidad].listaFacultades.indexOf(facultad)
+                                    switch (a.cEleccion){
+                                        case "nombre":
+                                            listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].name = a.nuevoValor
+                                            break
+                                        case "numeroEstudiantes":
+                                            listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].numeroEstudiantes = a.nuevoValor
+                                            break
+                                        case "poseeAsociacionEstudiantes":
+                                            listaUniversidades[indexUniversidad].listaFacultades[indexFacultad]= (a.nuevoValor === 'Si')
+                                            break
+                                        case "promedioInvestigativo":
+                                            listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].promedioInvestigativo = parseFloat(a.nuevoValor)
+                                            break
+                                    }
+                                }
+                            }
+                        ),
+                            res(listaUniversidades)
+                    ));
+            });
+        return promUniversidad
+    }
+
+    async deleteFacultad(listaUniversidades, indexUniversidad){
+        let promUniversidad;
+        let listaFacultades = listaUniversidades[indexUniversidad].listaFacultades;
+        await inquirer
+            .prompt([
+                {type:'input',name:'name',message:'Ingrese el nombre de la Facultad que desea eliminar:'},
+            ]).then(a=>{
+                promUniversidad = new Promise(
+                    res =>(
+                        listaUniversidades[indexUniversidad].listaFacultades = listaFacultades.filter(item => item.nombre !== a.nombre),
+                        res(listaUniversidades)
+                    ));
+            });
+        return promUniversidad
     }
 
 }
