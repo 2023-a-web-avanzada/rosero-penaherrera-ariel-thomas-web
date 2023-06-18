@@ -1,0 +1,16 @@
+{
+  "name": "01-examen-ib",
+  "version": "1.0.0",
+  "description": "Examen IB",
+  "main": "Aplicacion.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ariel Rosero",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^9.2.7"
+  },
+  "type": "module",
+  "devDependencies": {}
+}
