@@ -1,8 +1,12 @@
 //npm install --save @emotion/styled @emotion/react
-import { css } from '@emotion/react'
+
+'use client'
 import styled from '@emotion/styled';
+import { css } from '@emotion/react'
+import cStyles from './c_estilos.module.css'
+
 const pinkStyle = css`
-    color: hotpink;
+    color: pink;
 `
 const TituloNaranja = styled.h1`
     color: orange;
@@ -13,13 +17,28 @@ const TituloVerde = styled.h2`
     font-size: 10px;
 `
 export default function DEstilosEjemplo(){
+   const misEstilos = {
+       color: '#fff',
+       backgroundColor: 'black',
+       borderBottom: '5px solid yellow',
+   };
+
     return(
         <>
             <TituloNaranja>Titulo 1</TituloNaranja>
             <TituloVerde>Titulo 2</TituloVerde>
-            <div className={pinkStyle as unknown as string}>
+            <div css={pinkStyle}>
                 Texto Pink
             </div>
+            <p className={cStyles.rojo}>Clase rojo</p>
+            <p style={misEstilos}>Mis estilos</p>
+            <p style={
+                {
+                    color: 'black',
+                    backgroundColor: '#fff',
+                    borderBottom: '5px solid green',
+                }
+            }>Estilos en líneaD</p>
         </>
     )
 }
