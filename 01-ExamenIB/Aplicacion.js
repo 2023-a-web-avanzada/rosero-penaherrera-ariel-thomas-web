@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
-const fs = require('fs');
-
+//const fs = require('fs');
+import fs from "fs"
 
 class Universidad {
     /*constructor(){
@@ -147,7 +147,7 @@ class Facultad {
                 res => (
                     listaUniversidad.forEach(
                         valorActual => {
-                            if(valorActual.name === asnR.opcUniversidad){
+                            if(valorActual.name === ansR.opcUniversidad){
                                 indexUniversidad = listaUniversidad.indexOf(valorActual)
                             }
                         }
@@ -303,7 +303,7 @@ async function main(){
                             )
                         async function mainFacultad() {
                             try {
-                                facultad = new Facultad()
+                                const facultad = new Facultad()
                                 var universidades = readFile('./Universidades.txt').then(
                                     dataUniversidad =>{
                                         universidades = JSON.parse(dataUniversidad)

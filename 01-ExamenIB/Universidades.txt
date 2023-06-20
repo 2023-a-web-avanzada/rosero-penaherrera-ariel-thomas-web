@@ -1,0 +1,1 @@
+[{"idU":"1","fechaCreacion":"1869-01-08T05:19:20.000Z","nombre":"Escuela Politecnica Nacional","esPublica":true,"promedioNotas":88.99,"numeroEstudiantes":"50340","listaFacultades":[]}]
