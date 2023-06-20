@@ -16,7 +16,7 @@ const b_componente = ()=>{
 import {DESTRUCTION} from "dns";
 import DEstilosEjemplo from "@/app/componentes/DEstilosEjemplo";
 
-export default function a_hola_mundo(){
+export default function page(){
     return (
         <>
             <h1>Hola desde a_hola_mundo</h1>

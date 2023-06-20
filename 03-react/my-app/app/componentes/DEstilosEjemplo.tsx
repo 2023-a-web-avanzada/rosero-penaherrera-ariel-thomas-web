@@ -1,7 +1,6 @@
 //npm install --save @emotion/styled @emotion/react
-
 'use client'
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 import { css } from '@emotion/react'
 import cStyles from './c_estilos.module.css'
 
@@ -38,7 +37,7 @@ export default function DEstilosEjemplo(){
                     backgroundColor: '#fff',
                     borderBottom: '5px solid green',
                 }
-            }>Estilos en líneaD</p>
+            }>Estilos en línea</p>
         </>
     )
 }
