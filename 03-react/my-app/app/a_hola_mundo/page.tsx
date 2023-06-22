@@ -13,7 +13,6 @@ const b_componente = ()=>{
 }
  */
 
-import {DESTRUCTION} from "dns";
 import DEstilosEjemplo from "@/app/componentes/DEstilosEjemplo";
 
 export default function page(){

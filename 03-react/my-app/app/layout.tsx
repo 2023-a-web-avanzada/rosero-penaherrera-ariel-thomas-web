@@ -20,8 +20,8 @@ export default function RootLayout({
       <body className={inter.className}>
       <C_menuComponent/>
       {/*C_menuComponent></C_menuComponent>*/}
-      {children}
       <footer>Footer</footer>
+      {children}
       </body>
     </html>
   )
