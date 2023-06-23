@@ -3,15 +3,6 @@ import inquirer from 'inquirer';
 import fs from "fs"
 
 class Universidad {
-    /*constructor(){
-        this.idU = 0;
-        this.fechaCreacion = null;
-        this.nombre = "";
-        this.esPublica = true;
-        this.promedioNotas = 0.0;
-        this.numeroEstudiantes = 0;
-        this.listaFacultades = [];
-    }*/
 
     constructor(
         idU,
@@ -73,7 +64,7 @@ class Universidad {
                     res =>(
                         listaUniversidades.forEach(
                             valorActual => {
-                                if(valorActual.nombre == a.nombre){
+                                if(valorActual.nombre === a.nombre){
                                     indexUniversidad = listaUniversidades.indexOf(valorActual)
                                     switch (a.cEleccion){
                                         case "nombre":
@@ -111,14 +102,6 @@ class Universidad {
 }
 
 class Facultad {
-    /*constructor(){
-        this.idF = 0;
-        this.fechaCreacion = null;
-        this.nombre = "";
-        this.numeroEstudiantes = 0;
-        this.poseeAsociacionEstudiantes = true;
-        this.promedioInvestigativo = 0.0;
-    }*/
 
     constructor(
         idF,
@@ -196,28 +179,29 @@ class Facultad {
             ]).then(a=>{
                 promUniversidad = new Promise(
                     res =>(
-                        listaUniversidades[indexUniversidad].listaFacultades.forEach(
-                            facultad => {
-                                if(facultad.nombre == a.nombre){
-                                    indexFacultad = listaUniversidades[indexUniversidad].listaFacultades.indexOf(facultad)
-                                    switch (a.cEleccion){
-                                        case "nombre":
-                                            listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].name = a.nuevoValor
-                                            break
-                                        case "numeroEstudiantes":
-                                            listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].numeroEstudiantes = a.nuevoValor
-                                            break
-                                        case "poseeAsociacionEstudiantes":
-                                            listaUniversidades[indexUniversidad].listaFacultades[indexFacultad]= (a.nuevoValor === 'Si')
-                                            break
-                                        case "promedioInvestigativo":
-                                            listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].promedioInvestigativo = parseFloat(a.nuevoValor)
-                                            break
+                        listaUniversidades[indexUniversidad].listaFacultades
+                            .forEach(
+                                facultad => {
+                                    if(facultad.nombre === a.nombre){
+                                        indexFacultad = listaUniversidades[indexUniversidad].listaFacultades.indexOf(facultad)
+                                        switch (a.cEleccion){
+                                            case "nombre":
+                                                listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].name = a.nuevoValor
+                                                break
+                                            case "numeroEstudiantes":
+                                                listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].numeroEstudiantes = a.nuevoValor
+                                                break
+                                            case "poseeAsociacionEstudiantes":
+                                                listaUniversidades[indexUniversidad].listaFacultades[indexFacultad]= (a.nuevoValor === 'Si')
+                                                break
+                                            case "promedioInvestigativo":
+                                                listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].promedioInvestigativo = parseFloat(a.nuevoValor)
+                                                break
+                                        }
                                     }
                                 }
-                            }
-                        ),
-                            res(listaUniversidades)
+                            ),
+                    res(listaUniversidades)
                     ));
             });
         return promUniversidad
@@ -303,7 +287,7 @@ async function main(){
                             )
                         async function mainFacultad() {
                             try {
-                                const facultad = new Facultad()
+                                f = new Facultad()
                                 var universidades = readFile('./Universidades.txt').then(
                                     dataUniversidad =>{
                                         universidades = JSON.parse(dataUniversidad)
@@ -322,7 +306,7 @@ async function main(){
                                     ]).then((ansP) => {
                                         switch (ansP.opcion) {
                                             case 'Crear':
-                                                facultad.createFacultad().then(
+                                                f.createFacultad().then(
                                                     (dataFacultad) => {
                                                         universidades[indexUniversidad].listaFacultades.push(dataFacultad)
                                                         writeFile('./Universidades.txt', JSON.stringify(universidades))
@@ -336,7 +320,7 @@ async function main(){
                                                 break
 
                                             case 'Actualizar':
-                                                facultad.updateFacultad(universidades, indexUniversidad).then(
+                                                f.updateFacultad(universidades, indexUniversidad).then(
                                                     newData => {
                                                         writeFile('./Universidades.txt', JSON.stringify(newData))
                                                         console.log('Información actualizada con éxito')
@@ -346,7 +330,7 @@ async function main(){
                                                 break
 
                                             case 'Borrar Facultad':
-                                                facultad.deleteFacultad(universidades, indexUniversidad).then(
+                                                f.deleteFacultad(universidades, indexUniversidad).then(
                                                     newData => {
                                                         writeFile('./Universidades.txt', JSON.stringify(newData))
                                                         console.log('Información borrada con éxito')
