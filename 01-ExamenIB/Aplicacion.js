@@ -103,14 +103,7 @@ class Universidad {
 
 class Facultad {
 
-    constructor(
-        idF,
-        fechaCreacion,
-        nombre,
-        numeroEstudiantes,
-        poseeAsociacionEstudiantes,
-        promedioInvestigativo,
-    ) {
+    constructor(idF, fechaCreacion, nombre, numeroEstudiantes, poseeAsociacionEstudiantes, promedioInvestigativo) {
         this.idF = idF;
         this.fechaCreacion = fechaCreacion;
         this.nombre = nombre;
@@ -122,7 +115,7 @@ class Facultad {
     //Función para anexar las facultades con su respectiva Universidad
     async indexUniversidad(listaUniversidad){
         var promIndexUniversidad
-        var indexUniversidad;
+        var indiceUniversidad;
         await inquirer.prompt([
             {type:'input',name:'opcUniversidad',message:'Ingrese el nombre de la Universidad:'},
         ]).then(ansR => {
@@ -131,11 +124,11 @@ class Facultad {
                     listaUniversidad.forEach(
                         valorActual => {
                             if(valorActual.name === ansR.opcUniversidad){
-                                indexUniversidad = listaUniversidad.indexOf(valorActual)
+                                indiceUniversidad = listaUniversidad.indexOf(valorActual)
                             }
                         }
                     ),
-                        res(indexUniversidad)
+                        res(indiceUniversidad)
                 ));
         });
         return promIndexUniversidad
@@ -144,13 +137,13 @@ class Facultad {
     async createFacultad() {
         const miFacultad = new Facultad();
         let promFacultad;
-        const answerRes = await inquirer
+        await inquirer
             .prompt([
                 {type:'input',name:'id',message:'Ingrese el ID de la Facultad:'},
                 {type:'input',name:'fechaCreacion',message:'Ingresé la fecha de fundación de la Facultad con el formato YYYY-MM-DD:'},
                 {type:'input',name:'nombre',message:'Ingresé el nombre de la nueva Facultad:'},
                 {type:'input',name:'numeroEstudiantes',message:'Ingresé el numero de estudiantes de la Facultad:'},
-                {type:'input',name:'poseeAsociacionEstudiantes',message:'¿La Facultad tiene Asociación de Estudiantes?:', choices:['Si','No']},
+                {type:'rawlist',name:'poseeAsociacionEstudiantes',message:'¿La Facultad tiene Asociación de Estudiantes?:', choices: ['Si','No']},
                 {type:'input',name:'promedioInvestigativo',message:'Ingresé el promedio investigativo de la Facultad (0.0-10.0):', default: '5.0'}
             ]).then(a=>{
                 promFacultad = new Promise(
@@ -308,6 +301,7 @@ async function main(){
                                             case 'Crear':
                                                 f.createFacultad().then(
                                                     (dataFacultad) => {
+                                                        console.log(dataFacultad)
                                                         universidades[indexUniversidad].listaFacultades.push(dataFacultad)
                                                         writeFile('./Universidades.txt', JSON.stringify(universidades))
                                                         mainFacultad()
@@ -368,7 +362,6 @@ async function main(){
                         case 'Salir':
                             console.log('¡Vuelva pronto!')
                             break
-
                     }
                 }
             );
@@ -386,7 +379,7 @@ async function readFile(path){
                 'utf-8',//codificación
                 (errorReadFirstFile , content) =>{//callback
                     if(errorReadFirstFile){
-                        reject('Error read a file');
+                        reject('Error en la lectura de archivo');
                     }else{
                         resolve(content);
                     }
@@ -405,7 +398,7 @@ async function writeFile(path, content){
                 content,
                 (errorWrite) => {//callback
                     if (errorWrite) {
-                        reject('Error reading a file');
+                        reject('Error en la escritura de archivo');
                     } else {
                         resolve(content);
                     }
@@ -423,8 +416,8 @@ async function readWriteFile(path, newContent){
         }
         answerContentFileOriginal = JSON.parse(answerContentFileOriginal);
         answerContentFileOriginal.push(newContent)
-        const strRestaurant = JSON.stringify(answerContentFileOriginal);
-        await writeFile(path, strRestaurant);
+        const strUniversidad = JSON.stringify(answerContentFileOriginal);
+        await writeFile(path, strUniversidad);
     }catch (error){
         console.error(error);
     }
