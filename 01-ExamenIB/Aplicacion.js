@@ -4,14 +4,7 @@ import fs from "fs"
 
 class Universidad {
 
-    constructor(
-        idU,
-        fechaCreacion,
-        nombre,
-        esPublica,
-        promedioNotas,
-        numeroEstudiantes,
-        listaFacultades
+    constructor(idU, fechaCreacion, nombre, esPublica, promedioNotas, numeroEstudiantes, listaFacultades
     ) {
         this.idU = idU;
         this.fechaCreacion = fechaCreacion;
@@ -55,16 +48,16 @@ class Universidad {
         let indexUniversidad;
         const answerRes = await inquirer
             .prompt([
-                {type:'input',name:'id',message:'Ingresé el nombre de la Universidad:'},
+                {type:'input',name:'uCambiar',message:'Ingresé el nombre de la Universidad:'},
                 {type:'rawlist',name:'cEleccion',message:'Elige la opción que vas a cambiar: ',
-                    choices: ['name','promedioNotas','numeroEstudiantes']},
+                    choices: ['nombre','promedioNotas','numeroEstudiantes']},
                 {type:'input',name:'nuevoValor',message:'Ingrese el nuevo valor: '},
             ]).then(a=>{
                 promUniversidad = new Promise(
                     res =>(
                         listaUniversidades.forEach(
                             valorActual => {
-                                if(valorActual.nombre === a.nombre){
+                                if(valorActual.nombre === a.uCambiar){
                                     indexUniversidad = listaUniversidades.indexOf(valorActual)
                                     switch (a.cEleccion){
                                         case "nombre":
@@ -94,7 +87,7 @@ class Universidad {
             ]).then(a=>{
                 promUniversidad = new Promise(
                     res =>(
-                        res(listaUniversidades.filter(item => item.nombre !== a.nombre))
+                        res(listaUniversidades.filter(item => item.nombre !== a.name))
                     ));
             });
         return promUniversidad
@@ -123,7 +116,7 @@ class Facultad {
                 res => (
                     listaUniversidad.forEach(
                         valorActual => {
-                            if(valorActual.name === ansR.opcUniversidad){
+                            if(valorActual.nombre === ansR.opcUniversidad){
                                 indiceUniversidad = listaUniversidad.indexOf(valorActual)
                             }
                         }
@@ -165,27 +158,27 @@ class Facultad {
         let indexFacultad;
         await inquirer
             .prompt([
-                {type:'input',name:'id',message:'Ingrese el nombre de la Facultad:'},
+                {type:'input',name:'fCambiar',message:'Ingrese el nombre de la Facultad:'},
                 {type:'rawlist',name:'cEleccion',message:'Elige la opción que vas a cambiar: ',
-                    choices: ['name','numeroEstudiantes','poseeAsociacionEstudiantes','promedioInvestigativo']},
+                    choices: ['nombre','numeroEstudiantes','poseeAsociacionEstudiantes','promedioInvestigativo']},
                 {type:'input',name:'nuevoValor',message:'Ingrese el nuevo valor: '},
             ]).then(a=>{
                 promUniversidad = new Promise(
                     res =>(
                         listaUniversidades[indexUniversidad].listaFacultades
                             .forEach(
-                                facultad => {
-                                    if(facultad.nombre === a.nombre){
-                                        indexFacultad = listaUniversidades[indexUniversidad].listaFacultades.indexOf(facultad)
+                                facultative => {
+                                    if(facultative.nombre == a.fCambiar){
+                                        indexFacultad = listaUniversidades[indexUniversidad].listaFacultades.indexOf(facultative)
                                         switch (a.cEleccion){
                                             case "nombre":
-                                                listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].name = a.nuevoValor
+                                                listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].nombre = a.nuevoValor
                                                 break
                                             case "numeroEstudiantes":
                                                 listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].numeroEstudiantes = a.nuevoValor
                                                 break
                                             case "poseeAsociacionEstudiantes":
-                                                listaUniversidades[indexUniversidad].listaFacultades[indexFacultad]= (a.nuevoValor === 'Si')
+                                                listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].poseeAsociacionEstudiantes = (a.nuevoValor === 'Si' ? true : false)
                                                 break
                                             case "promedioInvestigativo":
                                                 listaUniversidades[indexUniversidad].listaFacultades[indexFacultad].promedioInvestigativo = parseFloat(a.nuevoValor)
@@ -202,19 +195,20 @@ class Facultad {
 
     async deleteFacultad(listaUniversidades, indexUniversidad){
         let promUniversidad;
-        let listaFacultades = listaUniversidades[indexUniversidad].listaFacultades;
+        let listFacultades = listaUniversidades[indexUniversidad].listaFacultades;
         await inquirer
             .prompt([
                 {type:'input',name:'name',message:'Ingrese el nombre de la Facultad que desea eliminar:'},
             ]).then(a=>{
                 promUniversidad = new Promise(
                     res =>(
-                        listaUniversidades[indexUniversidad].listaFacultades = listaFacultades.filter(item => item.nombre !== a.nombre),
+                        listaUniversidades[indexUniversidad].listaFacultades = listFacultades.filter(item => item.nombre !== a.name),
                             res(listaUniversidades)
                     ));
             });
         return promUniversidad
     }
+
 }
 
 async function main(){
@@ -301,7 +295,6 @@ async function main(){
                                             case 'Crear':
                                                 f.createFacultad().then(
                                                     (dataFacultad) => {
-                                                        console.log(dataFacultad)
                                                         universidades[indexUniversidad].listaFacultades.push(dataFacultad)
                                                         writeFile('./Universidades.txt', JSON.stringify(universidades))
                                                         mainFacultad()

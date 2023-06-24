@@ -1,1 +1,0 @@
-[{"idU":"1","fechaCreacion":"1869-09-30T05:19:20.000Z","nombre":"EPN","esPublica":true,"promedioNotas":8.99,"numeroEstudiantes":"10050","listaFacultades":[]},{"idU":"2","fechaCreacion":"1890-12-09T05:14:00.000Z","nombre":"ESPE","esPublica":true,"promedioNotas":8.78,"numeroEstudiantes":"15060","listaFacultades":[]}]
