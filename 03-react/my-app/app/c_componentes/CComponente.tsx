@@ -4,7 +4,7 @@ export type PropiedadesComponente = {
     url: string;
     iteraciones: number;
     mostrar?: boolean;
-    colorIteracion: string;
+    colorIteracion?: string;
 }
 export default function CComponente(
     props: PropiedadesComponente
