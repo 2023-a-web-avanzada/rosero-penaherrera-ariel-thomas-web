@@ -47,13 +47,20 @@ export default function Page(){
         [usuario] //arregloVariables
     );
 
+    useEffect(
+        ()=>{
+            console.log('Cambio todo', numero, arregloNumeros, usuario)
+        },
+        [numero, arregloNumeros, usuario]
+    )
+
     return (
         <>
-        <button className="bg-blue-500 m-2" onClick={(event)=>{
-            event.preventDefault();
-            setNumero(numero + 1);
-        }}>
-            Numero {numero}</button>
+            <button className="bg-blue-500 m-2" onClick={(event)=>{
+                event.preventDefault();
+                setNumero(numero + 1);
+            }}>
+                Numero {numero}</button>
 
             <button className="bg-blue-500 m-2" onClick={(event)=>{
                 event.preventDefault();
