@@ -1,5 +1,5 @@
 import {Moneda} from "@/app/e_custom_hook/interfaces/moneda"
-const MonedasConst: Moneda[] = [
+export const MonedasConst: Moneda[] = [
     {
         id: 'USD', nombre: 'Dolar Estados Unidos'
     },
