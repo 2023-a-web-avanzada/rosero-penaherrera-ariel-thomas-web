@@ -1,4 +1,4 @@
-import {useContext, useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import {ContenedorContext} from "@/app/f_use_context/context/ContenedorContext";
 import EComponenteB from "@/app/f_use_context/components/EComponenteB";
 
@@ -18,7 +18,7 @@ export default function EComponenteA(){
     return (
         <>
             <h1>Componente A</h1>
-            <p>{ContenedorContext.nombreUsuario}</p>
+            <p>{contenedorContexto.nombreUsuario}</p>
             <button className={"bg-blue-500 m-2"} onClick={
                 e=>{
                     e.preventDefault();

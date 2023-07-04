@@ -1,5 +1,8 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import EncabezadoComponent from "@/app/Encabezado/Encabezado.component";
+import FooterComponent from "@/app/Footer/Footer.component";
+import MenuComponent from "@/app/Menu/Menu.component";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +18,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      <EncabezadoComponent/>
+      <MenuComponent/>
+      <FooterComponent/>
+      {children}
+      </body>
     </html>
   )
 }

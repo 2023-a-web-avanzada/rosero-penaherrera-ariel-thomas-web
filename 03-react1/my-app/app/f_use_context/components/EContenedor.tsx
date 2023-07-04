@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {ContenedorContextObjeto} from "@/app/f_use_context/Interfaces/ContenedorContext";
+import React, {useEffect, useState} from "react";
+import {ContenedorContextObjeto} from "@/app/f_use_context/Interfaces/ContenedorContextObjeto";
 import {ContenedorContext} from "@/app/f_use_context/context/ContenedorContext";
 import EComponenteA from "@/app/f_use_context/components/EComponenteA";
 export default function EContenedor(){
