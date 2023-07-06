@@ -39,11 +39,29 @@ export default function Home() {
         closeSidebar();
     }
 
-    const handleSendMessage = () => {
+    const handleSendMessage = (message: string) => {
         if (!chatActiveId){
             //Creating new chat
+            let newChatId = uuidv4();
+            setChatList([{
+                id: newChatId,
+                title: message,
+                messages: [
+                    { id: uuidv4(), author: 'me', body: message }
+                ]
+            }, ...chatList]);
+
+            setChatActiveId(newChatId);
         } else {
             //Updating existing chat
+            let chatListClone = [...chatList];
+            let chatIndex = chatListClone.findIndex(item => item.id === chatActiveId);
+            chatListClone[chatIndex].messages.push({
+                id: uuidv4(),
+                author: 'me',
+                body:message
+            });
+            setChatList(chatListClone);
         }
     }
 
