@@ -4,7 +4,6 @@ import EComponenteB from "@/app/f_use_context/components/EComponenteB";
 
 export default function EComponenteA(){
     const contenedorContexto = useContext(ContenedorContext)
-
     useEffect(
         ()=>{
             console.log(
@@ -14,7 +13,6 @@ export default function EComponenteA(){
         },
         [contenedorContexto.nombreUsuario]
     )
-
     return (
         <>
             <h1>Componente A</h1>

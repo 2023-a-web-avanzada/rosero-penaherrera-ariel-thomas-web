@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import {Sidebar} from "@/components/Sidebar";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Header} from "@/components/Header";
 import {ChatArea} from "@/components/ChatArea";
 import {ChatMessage} from "@/types/ChatMessage";
@@ -10,31 +10,40 @@ import {Footer} from "@/components/Footer";
 
 export default function Home() {
     const [sidebarOpened, setSidebarOpened] = useState(false); //First UseState
-    const [chatActive, setChatActive] = useState<Chat>({
-        id: '123',
-        title: 'Bla Blu',
-        messages: [
-            { id: '99', author: 'me', body: 'Opa, tudo bem?'},
-            {id: '100', author: 'ai', body: 'Tudo óptimo, em que posso te ajudar?'}
-        ]
-    }); //Second UseState
+    const [chatList, setChatList] = useState<Chat[]>([]);
+    const [chatActiveId, setChatActiveId] = useState<string>('');
 
+    const [chatActive, setChatActive] = useState<Chat>(); //Second UseState
     const [AILoading, setAILoading] = useState(false); //Third UseState
 
+    //Use Effect para saber si existen chats activos
+    useEffect(() => {
+        setChatActive(chatList.find(item => item.id === chatActiveId));
+    }, [chatActiveId, chatList]);
 
     const openSideBar = () => setSidebarOpened(true);
     const closeSidebar = () => setSidebarOpened(false);
 
     const handleClearConversations = () => {
+        if(AILoading) return;
 
+        setChatActiveId('');
+        setChatList([]);
     }
 
     const handleNewChat = () => {
+        if(AILoading) return;
 
+        setChatActiveId('');
+        closeSidebar();
     }
 
     const handleSendMessage = () => {
-
+        if (!chatActiveId){
+            //Creating new chat
+        } else {
+            //Updating existing chat
+        }
     }
 
   return (
