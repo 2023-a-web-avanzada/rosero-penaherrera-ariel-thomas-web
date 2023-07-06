@@ -7,6 +7,7 @@ import {ChatArea} from "@/components/ChatArea";
 import {ChatMessage} from "@/types/ChatMessage";
 import {Chat} from "@/types/Chat";
 import {Footer} from "@/components/Footer";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
     const [sidebarOpened, setSidebarOpened] = useState(false); //First UseState
