@@ -8,6 +8,8 @@ import {ChatMessage} from "@/types/ChatMessage";
 import {Chat} from "@/types/Chat";
 import {Footer} from "@/components/Footer";
 import { v4 as uuidv4 } from 'uuid';
+import {SidebarButton} from "@/components/SidebarButton";
+import {SidebarChatButton} from "@/components/SidebarChatButton";
 
 export default function Home() {
     const [sidebarOpened, setSidebarOpened] = useState(false); //First UseState
@@ -21,6 +23,27 @@ export default function Home() {
     useEffect(() => {
         setChatActive(chatList.find(item => item.id === chatActiveId));
     }, [chatActiveId, chatList]);
+
+    //Use Effect para la devolución de la respuesta de la IA
+    useEffect( () => {
+        if(AILoading) getAIResponse();
+    }, [AILoading]);
+
+    const getAIResponse = () => {
+        setTimeout(() => {
+            let chatListClone = [...chatList];
+            let chatIndex = chatListClone.findIndex(item => item.id === chatActiveId);
+            if(chatIndex > -1){
+                chatListClone[chatIndex].messages.push({
+                    id: uuidv4(),
+                    author: 'ai',
+                    body: 'Aqui va la respuesta de la IA :)'
+                });
+            }
+            setChatList(chatListClone);
+            setAILoading(false);
+        }, 2000);
+    }
 
     const openSideBar = () => setSidebarOpened(true);
     const closeSidebar = () => setSidebarOpened(false);
@@ -63,6 +86,33 @@ export default function Home() {
             });
             setChatList(chatListClone);
         }
+
+        setAILoading(true);
+    }
+
+    const handleSelectChat = (id: string) => {
+        if(AILoading) return;
+
+        let item = chatList.find(item => item.id === id);
+        if(item) setChatActiveId(item.id);
+        closeSidebar();
+    }
+
+    const handleDeleteChat = (id: string) => {
+        let chatListClone = [...chatList];
+        let chatIndex = chatListClone.findIndex(item => item.id === id);
+        chatListClone.splice(chatIndex, 1);
+        setChatList(chatListClone);
+        setChatActiveId('');
+    }
+
+    const handleEditChat = (id: string, newTitle: string) => {
+        if(newTitle){
+            let chatListClone = [...chatList];
+            let chatIndex = chatListClone.findIndex(item => item.id === id);
+            chatListClone[chatIndex].title = newTitle;
+            setChatList(chatListClone);
+        }
     }
 
   return (
@@ -74,17 +124,26 @@ export default function Home() {
             onClear={handleClearConversations}
             onNewChat={handleNewChat}
         >
-            <div className="w-16 h-96 bg-red-200 mb-2"> ... </div>
+            {chatList.map(item=>(
+                <SidebarChatButton
+                    key={item.id}
+                    chatItem={item}
+                    active={item.id === chatActiveId}
+                    onClick={handleSelectChat}
+                    onDelete={handleDeleteChat}
+                    onEdit={handleEditChat}
+                />
+            ))}
         </Sidebar>
         <section className="flex flex-col w-full">
 
             <Header
                 openSidebarClick={openSideBar}
-                title={'Bla bla bla'}
+                title={chatActive ? chatActive.title: 'New Chat'}
                 newChatClick={handleNewChat}
             />
 
-            <ChatArea chat={chatActive}/>
+            <ChatArea chat={chatActive} loading={AILoading} />
 
             <Footer
                 onSendMessage={handleSendMessage}
