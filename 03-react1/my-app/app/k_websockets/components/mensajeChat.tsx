@@ -13,6 +13,5 @@ export default function MensajeChat(props: MensajeChatProps){
                     <strong>{nombre}:</strong>{mensaje}
                 </p>
         }
-
     </>)
 }
