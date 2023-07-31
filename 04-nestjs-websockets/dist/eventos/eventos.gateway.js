@@ -15,12 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventosGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
+const eventos_service_1 = require("./eventos.service");
 let EventosGateway = exports.EventosGateway = class EventosGateway {
+    constructor(_eventosService) {
+        this._eventosService = _eventosService;
+    }
     devolverHola(message, socket) {
         console.log('message', message);
         socket.broadcast
             .emit('escucharEventoHola', {
-            mensaje: 'Bienvenido ' + message.mensaje
+            mensaje: this._eventosService.saludar() + ' ' + message.mensaje
         });
         return { mensaje: 'ok' };
     }
@@ -75,6 +79,7 @@ exports.EventosGateway = EventosGateway = __decorate([
         cors: {
             origin: '*',
         }
-    })
+    }),
+    __metadata("design:paramtypes", [eventos_service_1.EventosService])
 ], EventosGateway);
 //# sourceMappingURL=eventos.gateway.js.map

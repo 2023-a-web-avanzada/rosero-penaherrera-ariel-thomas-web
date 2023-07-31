@@ -1,5 +1,8 @@
 import { Socket } from 'socket.io';
+import { EventosService } from "./eventos.service";
 export declare class EventosGateway {
+    private readonly _eventosService;
+    constructor(_eventosService: EventosService);
     devolverHola(message: {
         mensaje: string;
     }, socket: Socket): {
