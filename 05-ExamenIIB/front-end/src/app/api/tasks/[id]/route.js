@@ -20,10 +20,21 @@ export async function GET(request, { params }){
    }
 }
 
-export function DELETE(request, {params}){
-    return NextResponse.json({
-        message: `Eliminando tarea ${params.id}...`
-    })
+export async function DELETE(request, {params}){
+    try {
+        const taskDeleted = await Task.findByIdAndDelete(params.id)
+        if(!taskDeleted)
+            return NextResponse.json({
+                message: "Task not found",
+            },{
+                status: 404
+            })
+        return NextResponse.json(taskDeleted)
+    } catch (error) {
+        return NextResponse.json(error.message, {
+            status: 400
+        })
+    }
 }
 
 export async function PUT(request, {params}){

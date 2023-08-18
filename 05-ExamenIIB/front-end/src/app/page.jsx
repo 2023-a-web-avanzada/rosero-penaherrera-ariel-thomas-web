@@ -1,7 +1,22 @@
-import Image from 'next/image'
+import {connectDB} from "@/utils/mongoose";
+import Task from '@/models/Task'
+import TaskCard from "@/components/TaskCard";
 
-export default function Home() {
+async function loadTasks() {
+  connectDB()
+  const tasks = await Task.find()
+  return tasks
+}
+
+async function Home() {
+  const tasks = await loadTasks()
   return (
-    <div>HomPage</div>
+    <div className='grid grid-cols-3 gap-2'>
+      {tasks.map(task => (
+          <TaskCard task={task} key={task._id} />
+      ))}
+    </div>
   )
 }
+
+export default Home
