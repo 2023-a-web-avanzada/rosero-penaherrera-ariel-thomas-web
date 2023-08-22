@@ -1,6 +1,6 @@
-import {connectDB} from "@/utils/mongoose";
-import Task from '@/models/Task'
-import TaskCard from "@/components/TaskCard";
+import {connectDB} from "../utils/mongoose";
+import Task from '../models/Task'
+import TaskCard from "../components/TaskCard";
 
 async function loadTasks() {
   connectDB()
