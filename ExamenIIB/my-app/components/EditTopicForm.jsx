@@ -38,18 +38,18 @@ export default function EditTopicForm({ id, title, description}){
                     value={newTitle}
                     className="border border-slate-500 px-8 py-2"
                     type="text"
-                    placeholder="Topic Title"
+                    placeholder="University Title"
                 />
                 <input
                     onChange={(e) => setNewDescription(e.target.value)}
                     value={newDescription}
                     className="border border-slate-500 px-8 py-2"
                     type="text"
-                    placeholder="Topic Description"
+                    placeholder="University Description"
                 />
 
                 <button className="bg-green-700 font-bold text-white py-3 px-6 w-fit">
-                    Update Topic
+                    Update University
                 </button>
             </form>
         </>

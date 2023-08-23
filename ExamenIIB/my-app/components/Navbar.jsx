@@ -4,10 +4,10 @@ export default function Navbar(){
         <>
             <nav className="flex justify-between items-center bg-slate-800 px-8 py-3">
                 <Link className="text-white font-bold" href={"/"}>
-                    GTCoding
+                    UNIVERSIDADES
                 </Link>
-                <Link className="bg-white p-2" href={"/addTopic"}>
-                    Add Topic
+                <Link className="bg-white p-2" href={"/addUniversity"}>
+                    Crear Universidad
                 </Link>
             </nav>
         </>

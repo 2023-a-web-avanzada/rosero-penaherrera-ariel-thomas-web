@@ -3,15 +3,18 @@ import {useState} from "react";
 import {useRouter} from "next/navigation"
 
 export default function AddTopic(){
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+    const [name, setName] = useState("");
+    const [foundationDate, setFoundationDate] = useState("");
+    const [isPublic, setIsPublic] = useState("");
+    const [studentsNumber, setStudentsNumber] = useState("");
+
 
     const router = useRouter();
 
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        if(!title || !description){
+        if(!name || !foundationDate){
             alert("Title and description are required.");
             return;
         }
@@ -22,7 +25,7 @@ export default function AddTopic(){
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify({title, description}),
+                body: JSON.stringify({title: name, description: foundationDate}),
             });
 
             if(res.ok){
@@ -40,22 +43,22 @@ export default function AddTopic(){
         <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                 <input
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
                     className="border border-slate-500 px-8 py-2"
                     type="text"
-                    placeholder="Topic Title"
+                    placeholder="University Title"
                 />
                 <input
-                    onChange={(e) => setDescription(e.target.value)}
-                    value={description}
+                    onChange={(e) => setFoundationDate(e.target.value)}
+                    value={foundationDate}
                     className="border border-slate-500 px-8 py-2"
                     type="text"
-                    placeholder="Topic Description"
+                    placeholder="University Description"
                 />
 
                 <button type="submit" className="bg-green-700 font-bold text-white py-3 px-6 w-fit">
-                    Add Topic
+                    Add University
                 </button>
             </form>
         </>
