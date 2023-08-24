@@ -1,4 +1,4 @@
-import EditTopicForm from "@/components/EditTopicForm";
+import EditUniversityForm from "@/components/EditUniversityForm";
 
 const getTopicById = async (id) => {
     try {
@@ -22,7 +22,7 @@ export default async function EditTopic({ params }){
     const { title, description } = topic;
     return (
         <>
-            <EditTopicForm id={id} title={title} description={description}/>
+            <EditUniversityForm id={id} title={title} description={description}/>
         </>
     )
 }

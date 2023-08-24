@@ -31,7 +31,7 @@ export default async function UniversitiesList(){
                     <h2 className="font-bold text-2xl">{t.name}</h2>
                     <div className="grid grid-cols-1 divide-y gap-x-5">
                         <div><label className="font-semibold">Fecha de fundación: </label>{t.foundationDate}</div>
-                        <div><label className="font-semibold">¿Es Pública?: </label>{t.isPublic}</div>
+                        <div><label className="font-semibold">¿Es Pública?: </label>{t.isPublic.toString()}</div>
                         <div><label className="font-semibold">Número de estudiantes: </label>{t.studentsNumber}</div>
                     </div>
                 </div>
