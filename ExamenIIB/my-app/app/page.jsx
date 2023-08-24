@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import TopicsList from "@/components/TopicsList";
+import UniversitiesList from "@/components/UniversitiesList";
 
 export default function Home() {
   return (
     <>
-    <TopicsList/>
+    <UniversitiesList/>
     </>
   )
 }

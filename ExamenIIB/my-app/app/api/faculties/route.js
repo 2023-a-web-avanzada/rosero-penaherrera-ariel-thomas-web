@@ -10,9 +10,9 @@ export async function POST(request){
 }
 
 export async function GET(request){
-    const idUniversity = request.nextUrl.searchParams.get("idUniversity")
+    const idFaculty = request.nextUrl.searchParams.get("idFaculty")
     await connectMongoDB();
-    const faculties = await Faculty.find({idUniversity: idUniversity});
+    const faculties = await Faculty.find({idUniversity: idFaculty});
     return NextResponse.json({faculties})
 }
 
