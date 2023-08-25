@@ -2,7 +2,7 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation"
 
-export default function AddTopic(){
+export default function AddUniversity(){
     const [name, setName] = useState("");
     const [foundationDate, setFoundationDate] = useState("");
     const [isPublic, setIsPublic] = useState("");
@@ -14,24 +14,24 @@ export default function AddTopic(){
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        if(!name || !foundationDate){
-            alert("Title and description are required.");
+        if(!name || !foundationDate || !isPublic || !studentsNumber){
+            alert("Todos los campos son requeridos");
             return;
         }
 
         try{
-            const res = await fetch("http://localhost:3000/api/topics", {
+            const res = await fetch("http://localhost:3000/api/universities", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify({title: name, description: foundationDate}),
+                body: JSON.stringify({name, foundationDate, isPublic, studentsNumber}),
             });
 
             if(res.ok){
                 router.push("/");
             }else{
-                throw new Error("Failed to create a topic");
+                throw new Error("Failed to create university");
             }
         } catch(error) {
             console.log(error);
@@ -47,16 +47,31 @@ export default function AddTopic(){
                     value={name}
                     className="border border-slate-500 px-8 py-2"
                     type="text"
-                    placeholder="University Title"
+                    placeholder="Nombre Universidad"
                 />
                 <input
                     onChange={(e) => setFoundationDate(e.target.value)}
                     value={foundationDate}
                     className="border border-slate-500 px-8 py-2"
                     type="text"
-                    placeholder="University Description"
+                    placeholder="Fecha de fundación"
                 />
-
+                <label> ¿Es Pública?
+                    <input
+                        onChange={(e) => setIsPublic(e.target.value)}
+                        value={isPublic}
+                        className="border border-slate-500 px-8 py-2"
+                        type="text"
+                        placeholder="True or False"
+                    />
+                </label>
+                <input
+                    onChange={(e) => setStudentsNumber(e.target.value)}
+                    value={studentsNumber}
+                    className="border border-slate-500 px-8 py-2"
+                    type="text"
+                    placeholder="Número de estudiantes"
+                />
                 <button type="submit" className="bg-green-700 font-bold text-white py-3 px-6 w-fit">
                     Add University
                 </button>

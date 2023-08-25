@@ -1,13 +1,13 @@
 import EditUniversityForm from "@/components/EditUniversityForm";
 
-const getTopicById = async (id) => {
+const getUniversityById = async (idUniversity) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+        const res = await fetch(`http://localhost:3000/api/universities/${idUniversity}`, {
             cache: "no-store",
         });
 
         if(!res.ok){
-            throw new Error("Failed to fetch topic");
+            throw new Error("Failed to fetch university");
         }
 
         return res.json();
@@ -16,13 +16,13 @@ const getTopicById = async (id) => {
     }
 }
 
-export default async function EditTopic({ params }){
-    const { id } = params;
-    const { topic } = await getTopicById(id);
-    const { title, description } = topic;
+export default async function EditUniversity({ params }){
+    const { idUniversity } = params;
+    const { university } = await getUniversityById(idUniversity);
+    const { name, foundationDate, isPublic, studentsNumber } = university;
     return (
         <>
-            <EditUniversityForm id={id} title={title} description={description}/>
+            <EditUniversityForm idUniversity={idUniversity} name={name} foundationDate={foundationDate} isPublic={isPublic} studentsNumber={studentsNumber}/>
         </>
     )
 }
