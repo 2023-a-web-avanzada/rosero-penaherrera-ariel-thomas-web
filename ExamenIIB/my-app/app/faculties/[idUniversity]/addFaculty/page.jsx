@@ -10,7 +10,7 @@ export default function AddFaculty({params}){
 
     const [name, setName] = useState("");
     const [foundationDate, setFoundationDate] = useState("");
-    const [ownBuilding, setOwnBuilding] = useState("");
+    const [ownBuilding, setOwnBuilding] = useState(false);
     const [careersNumber, setCareersNumber] = useState("");
 
     const router = useRouter();
@@ -29,7 +29,7 @@ export default function AddFaculty({params}){
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify({name, foundationDate, ownBuilding, careersNumber}),
+                body: JSON.stringify({name, foundationDate, ownBuilding, careersNumber: parseInt(careersNumber)}),
             });
 
             if(res.ok){
@@ -62,18 +62,17 @@ export default function AddFaculty({params}){
                     />
                     <label> ¿Tiene su propio edificio?
                         <input
-                            onChange={(e) => setOwnBuilding(e.target.value)}
-                            value={ownBuilding}
+                            onChange={(e) => setOwnBuilding(e.target.checked)}
+                            checked={ownBuilding}
                             className="border border-slate-500 px-8 py-2"
-                            type="text"
-                            placeholder="True or False"
+                            type="checkbox"
                         />
                     </label>
                     <input
                         onChange={(e) => setCareersNumber(e.target.value)}
                         value={careersNumber}
                         className="border border-slate-500 px-8 py-2"
-                        type="text"
+                        type="number"
                         placeholder="Número de carreras"
                     />
                     <button type="submit" className="bg-green-700 font-bold text-white py-3 px-6 w-fit">

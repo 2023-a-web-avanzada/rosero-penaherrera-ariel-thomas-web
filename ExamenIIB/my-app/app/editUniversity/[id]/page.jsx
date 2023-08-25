@@ -1,8 +1,8 @@
 import EditUniversityForm from "@/components/EditUniversityForm";
 
-const getUniversityById = async (idUniversity) => {
+const getUniversityById = async (id) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/universities/${idUniversity}`, {
+        const res = await fetch(`http://localhost:3000/api/universities/${id}`, {
             cache: "no-store",
         });
 
@@ -17,12 +17,12 @@ const getUniversityById = async (idUniversity) => {
 }
 
 export default async function EditUniversity({ params }){
-    const { idUniversity } = params;
-    const { university } = await getUniversityById(idUniversity);
+    const { id } = params;
+    const { university } = await getUniversityById(id);
     const { name, foundationDate, isPublic, studentsNumber } = university;
     return (
         <>
-            <EditUniversityForm idUniversity={idUniversity} name={name} foundationDate={foundationDate} isPublic={isPublic} studentsNumber={studentsNumber}/>
+            <EditUniversityForm idUniversity={id} name={name} foundationDate={foundationDate} isPublic={isPublic} studentsNumber={studentsNumber}/>
         </>
     )
 }

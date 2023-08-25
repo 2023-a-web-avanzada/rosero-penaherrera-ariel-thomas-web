@@ -1,6 +1,7 @@
 import RemoveBtn from "@/components/RemoveBtn";
 import Link from "next/link";
 import {HiPencilAlt} from "react-icons/hi";
+import {HiBuildingOffice2} from "react-icons/hi2";
 
 const getUniversities = async () => {
     try{
@@ -40,6 +41,9 @@ export default async function UniversitiesList(){
                     <RemoveBtn idUniversity={t._id}/>
                     <Link href={`/editUniversity/${t._id}`}>
                         <HiPencilAlt size={24} />
+                    </Link>
+                    <Link href={`/faculties/${t._id}?name=${encodeURIComponent(t.name)}`}>
+                        <HiBuildingOffice2 size={24} />
                     </Link>
                 </div>
 

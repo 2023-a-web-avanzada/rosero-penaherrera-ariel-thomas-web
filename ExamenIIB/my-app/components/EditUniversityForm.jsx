@@ -6,7 +6,7 @@ export default function EditUniversityForm({ idUniversity, name, foundationDate,
     const [newName, setNewName] = useState(name);
     const [newFoundationDate, setNewFoundationDate] = useState(foundationDate);
     const [newIsPublic, setNewIsPublic] = useState(isPublic)
-    const [newStudentsNumber, setNewStudentsNumber] = useState(studentsNumber)
+    const [newStudentsNumber, setNewStudentsNumber] = useState(studentsNumber.toString())
 
     const router = useRouter();
     const handleSumit = async (e) => {
@@ -18,7 +18,7 @@ export default function EditUniversityForm({ idUniversity, name, foundationDate,
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify({ newName, newFoundationDate, newIsPublic, newStudentsNumber}),
+                body: JSON.stringify({ newName, newFoundationDate, newIsPublic, newStudentsNumber: parseInt(newStudentsNumber)}),
             });
 
             if(!res.ok){
@@ -52,11 +52,10 @@ export default function EditUniversityForm({ idUniversity, name, foundationDate,
 
                 <label>¿Es Pública?
                     <input
-                        onChange={(e) => setNewIsPublic(e.target.value)}
-                        value={newIsPublic}
+                        onChange={(e) => setNewIsPublic(e.target.checked)}
+                        checked={newIsPublic}
                         className="border border-slate-500 px-8 py-2"
-                        type="text"
-                        placeholder="True or False"
+                        type="checkbox"
                     />
                 </label>
 
@@ -64,7 +63,7 @@ export default function EditUniversityForm({ idUniversity, name, foundationDate,
                     onChange={(e) => setNewStudentsNumber(e.target.value)}
                     value={newStudentsNumber}
                     className="border border-slate-500 px-8 py-2"
-                    type="text"
+                    type="number"
                     placeholder="Número de estudiantes"
                 />
 

@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation"
 export default function AddUniversity(){
     const [name, setName] = useState("");
     const [foundationDate, setFoundationDate] = useState("");
-    const [isPublic, setIsPublic] = useState("");
+    const [isPublic, setIsPublic] = useState(false);
     const [studentsNumber, setStudentsNumber] = useState("");
 
 
@@ -25,11 +25,12 @@ export default function AddUniversity(){
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify({name, foundationDate, isPublic, studentsNumber}),
+                body: JSON.stringify({name, foundationDate, isPublic, studentsNumber: parseInt(studentsNumber)}),
             });
 
             if(res.ok){
                 router.push("/");
+                router.refresh();
             }else{
                 throw new Error("Failed to create university");
             }
@@ -58,18 +59,17 @@ export default function AddUniversity(){
                 />
                 <label> ¿Es Pública?
                     <input
-                        onChange={(e) => setIsPublic(e.target.value)}
-                        value={isPublic}
+                        onChange={(e) => setIsPublic(e.target.checked)}
+                        checked={isPublic}
                         className="border border-slate-500 px-8 py-2"
-                        type="text"
-                        placeholder="True or False"
+                        type="checkbox"
                     />
                 </label>
                 <input
                     onChange={(e) => setStudentsNumber(e.target.value)}
                     value={studentsNumber}
                     className="border border-slate-500 px-8 py-2"
-                    type="text"
+                    type="number"
                     placeholder="Número de estudiantes"
                 />
                 <button type="submit" className="bg-green-700 font-bold text-white py-3 px-6 w-fit">

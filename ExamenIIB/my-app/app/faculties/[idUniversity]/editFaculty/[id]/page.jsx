@@ -2,9 +2,9 @@
 import NavbarFaculty from "@/components/NavbarFaculty";
 import EditFacultyForm from "@/components/EditFacultyForm";
 
-const getFacultyById = async (idFaculty) => {
+const getFacultyById = async (id) => {
     try{
-        const res = await fetch(`https://localhost:3000/api/faculties/${idFaculty}`,
+        const res = await fetch(`http://localhost:3000/api/faculties/${id}`,
             {cache: "no-store"});
 
         if(!res.ok){
@@ -18,15 +18,14 @@ const getFacultyById = async (idFaculty) => {
 }
 export default async function EditFaculty({params}){
     const idUniversity = params.idUniversity
-    const {idFaculty} = params;
-    console.log(idFaculty);
-    const {faculty} = await getFacultyById(idFaculty)
+    const {id} = params;
+    const {faculty} = await getFacultyById(id)
     const {name, foundationDate, ownBuilding, careersNumber} = faculty;
 
     return (
         <>
-            <NavbarFaculty params={idFaculty}/>
-            <EditFacultyForm idFaculty={idFaculty} name={name}
+            <NavbarFaculty params={id}/>
+            <EditFacultyForm idFaculty={id} name={name}
                              foundationDate={foundationDate} ownBuilding={ownBuilding}
                              careersNumber={careersNumber} idUniversity={idUniversity}/>
         </>

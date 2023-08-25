@@ -6,7 +6,7 @@ export default function EditFacultyForm({ idFaculty, name, foundationDate, ownBu
     const [newName, setNewName] = useState(name)
     const [newFoundationDate, setNewFoundationDate] = useState(foundationDate);
     const [newOwnBuilding, setNewOwnBuilding] = useState(ownBuilding)
-    const [newCareersNumber, setNewCareersNumber] = useState(careersNumber)
+    const [newCareersNumber, setNewCareersNumber] = useState(careersNumber.toString())
 
     const router = useRouter();
     const handleSumit = async (e) => {
@@ -18,7 +18,7 @@ export default function EditFacultyForm({ idFaculty, name, foundationDate, ownBu
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify({ newName, newFoundationDate, newOwnBuilding, newCareersNumber}),
+                body: JSON.stringify({ newName, newFoundationDate, newOwnBuilding, newCareersNumber: parseInt(newCareersNumber)}),
             });
 
             if(!res.ok){
@@ -52,11 +52,10 @@ export default function EditFacultyForm({ idFaculty, name, foundationDate, ownBu
 
                 <label>¿Tiene su propio edificio?
                     <input
-                        onChange={(e) => setNewOwnBuilding(e.target.value)}
-                        value={newOwnBuilding}
+                        onChange={(e) => setNewOwnBuilding(e.target.checked)}
+                        checked={newOwnBuilding}
                         className="border border-slate-500 px-8 py-2"
-                        type="text"
-                        placeholder="True or False"
+                        type="checkbox"
                     />
                 </label>
 
@@ -64,7 +63,7 @@ export default function EditFacultyForm({ idFaculty, name, foundationDate, ownBu
                     onChange={(e) => setNewCareersNumber(e.target.value)}
                     value={newCareersNumber}
                     className="border border-slate-500 px-8 py-2"
-                    type="text"
+                    type="number"
                     placeholder="Número de carreras"
                 />
 

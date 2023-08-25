@@ -6,6 +6,7 @@ export default function HomeFaculty({params}){
     return (
         <>
             <NavbarFaculty params={idUniversity}/>
+
             <FacultiesList params={idUniversity}/>
         </>
     )

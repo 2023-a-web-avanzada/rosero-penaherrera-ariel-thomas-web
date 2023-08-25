@@ -37,7 +37,7 @@ export default async function FacultiesList({params}){
 
                     <div className="flex gap-2">
                         <RemoveBtnFaculty idFaculty={f._id}/>
-                        <Link href={`/faculties/${params}/editF/${f._id}`}>
+                        <Link href={`/faculties/${params}/editFaculty/${f._id}`}>
                             <HiPencilAlt size={24} />
                         </Link>
                     </div>
