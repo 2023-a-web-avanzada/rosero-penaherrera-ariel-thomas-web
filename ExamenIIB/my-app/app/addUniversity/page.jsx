@@ -14,7 +14,7 @@ export default function AddUniversity(){
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        if(!name || !foundationDate || !isPublic || !studentsNumber){
+        if(!name || !foundationDate || !studentsNumber){
             alert("Todos los campos son requeridos");
             return;
         }

@@ -3,8 +3,10 @@ import {HiPencilAlt} from "react-icons/hi";
 import RemoveBtnFaculty from "@/components/RemoveBtnFaculty";
 
 const getFaculties = async (params) => {
+
     try {
-        const res = await fetch(`http://localhost:3000/api/faculties/?idUniversity=${params}`, {
+        console.log("Params:", params);
+        const res = await fetch(`http://localhost:3000/api/faculties?idUniversity=${params.params}`, {
             cache: 'no-store'
         });
 
@@ -20,7 +22,7 @@ const getFaculties = async (params) => {
 
 export default async function FacultiesList({params}){
 
-    const { faculties } = await getFaculties();
+    const { faculties } = await getFaculties({params});
 
     return(
         <>

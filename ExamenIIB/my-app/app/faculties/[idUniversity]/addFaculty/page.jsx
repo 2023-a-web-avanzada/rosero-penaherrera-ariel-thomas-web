@@ -6,7 +6,7 @@ import NavbarFaculty from "@/components/NavbarFaculty";
 
 export default function AddFaculty({params}){
     const idUniversity = params.idUniversity
-    console.log(idUniversity)
+    console.log("Componente anadir: " + idUniversity)
 
     const [name, setName] = useState("");
     const [foundationDate, setFoundationDate] = useState("");
@@ -18,7 +18,7 @@ export default function AddFaculty({params}){
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        if(!name || !foundationDate || !ownBuilding || !careersNumber){
+        if(!name || !foundationDate || !careersNumber){
             alert("Todos los campos son requeridos");
             return;
         }
@@ -29,7 +29,7 @@ export default function AddFaculty({params}){
                 headers: {
                     "Content-type": "application/json",
                 },
-                body: JSON.stringify({name, foundationDate, ownBuilding, careersNumber: parseInt(careersNumber)}),
+                body: JSON.stringify({name, foundationDate, ownBuilding, careersNumber: parseInt(careersNumber), idUniversity}),
             });
 
             if(res.ok){
