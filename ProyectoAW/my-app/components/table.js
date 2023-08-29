@@ -66,3 +66,4 @@ export default function Table(){
         </>
     )
 }
+//Video Minuto 24:31

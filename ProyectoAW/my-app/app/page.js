@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { IoIosAddCircle } from 'react-icons/io'
 import Table from "@/components/table";
+import Form from "@/components/form";
 export default function Home() {
   return (
     <>
@@ -13,8 +14,11 @@ export default function Home() {
                         Añadir Maquina <span className="px-1"><IoIosAddCircle size={23}/></span>
                   </button>
               </div>
+          </div>
+          {/*collapsable form*/}
+          <div className="container mx-auto">
+              <Form></Form>
 
-              {/*collapsable form*/}
           </div>
           {/*table*/}
           <div className="container mx-auto">
