@@ -1,4 +1,5 @@
 import {BiEdit, BiTrashAlt} from "react-icons/bi";
+import data from "../database/data.json"
 
 export default function Table(){
     return (
@@ -33,37 +34,46 @@ export default function Table(){
                     </tr>
                 </thead>
                 <tbody className="bg-gray-200">
-                    <tr className="bg-gray-50 text-center">
-                        <td className="px-16 py-2 flex flex-row items-center">
-                            <img src="#" alt=""/>
-                            <span className="text-center ml-2 font-semibold text-black">Digestor</span>
-                        </td>
-                        <td className="px-16 py-2 text-black">
-                            <span>84100007</span>
-                        </td>
-                        <td className="px-16 py-2 text-black">
-                            <span>84100007</span>
-                        </td>
-                        <td className="px-16 py-2 text-black">
-                            <span>970400015715</span>
-                        </td>
-                        <td className="px-16 py-2 text-black">
-                            <button className="cursor"><span className="bg-green-500 text-white px-4 py-1 rounded">En Uso</span></button>
-                        </td>
-                        <td className="px-16 py-2 text-black">
-                            <span>$5000</span>
-                        </td>
-                        <td className="px-16 py-2 text-black">
-                            <span>Ing.Marco Polo</span>
-                        </td>
-                        <td className="px-16 py-2 flex justify-around gap-5">
-                            <button className="cursor"><BiEdit size={25} color={"rgb(34,197,94)"}/></button>
-                            <button className="cursor"><BiTrashAlt size={25} color={"rgb(244,63,94)"}/></button>
-                        </td>
-                    </tr>
+                {
+                    data.map((obj,i) => <Tr {...obj} key={i} />)
+                }
                 </tbody>
             </table>
         </>
     )
 }
-//Video Minuto 24:31
+
+function Tr({id,avatar,nombre,codBienes,marcamodelo,nSerie,status,costo,custodio}){
+    return (
+        <>
+            <tr className="bg-gray-50 text-center">
+                <td className="px-16 py-2 flex flex-row items-center">
+                    <img src={avatar || '#'} alt=""/>
+                    <span className="text-center ml-2 font-semibold text-black">{nombre || "Desconocido"}</span>
+                </td>
+                <td className="px-16 py-2 text-black">
+                    <span>{codBienes || "Desconocido"}</span>
+                </td>
+                <td className="px-16 py-2 text-black">
+                    <span>{marcamodelo || "Desconocido"}</span>
+                </td>
+                <td className="px-16 py-2 text-black">
+                    <span>{nSerie || "Desconocido"}</span>
+                </td>
+                <td className="px-16 py-2 text-black">
+                    <button className="cursor"><span className="bg-green-500 text-white px-4 py-1 rounded">{status || "Desconocido"}</span></button>
+                </td>
+                <td className="px-16 py-2 text-black">
+                    <span>{costo || "0"}</span>
+                </td>
+                <td className="px-16 py-2 text-black">
+                    <span>{custodio || "Desconocido"}</span>
+                </td>
+                <td className="px-16 py-2 flex justify-around gap-5">
+                    <button className="cursor"><BiEdit size={25} color={"rgb(34,197,94)"}/></button>
+                    <button className="cursor"><BiTrashAlt size={25} color={"rgb(244,63,94)"}/></button>
+                </td>
+            </tr>
+        </>
+    )
+}

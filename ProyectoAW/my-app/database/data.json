@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+    "nombre": "Digestor",
+    "codBienes": "84100007",
+    "marcamodelo": "ATY/TY-500",
+    "nSerie": "970400015715",
+    "status": "En Uso",
+    "costo": "$5000",
+    "custodio": "Ing.Marco Polo"
+  },
+  {
+    "id": 2,
+    "avatar": "https://randomuser.me/api/portraits/men/2.jpg",
+    "nombre": "Termometro",
+    "codBienes": "841789",
+    "marcamodelo": "TRE/RE-700",
+    "nSerie": "970400089994",
+    "status": "En Uso",
+    "costo": "$27000",
+    "custodio": "Ing.Marco Polo"
+  }
+]
